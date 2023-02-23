@@ -1,9 +1,12 @@
+
 import pandas as pd
 import streamlit as st
 import pickle
 
 pickle_in = open('model.pkl', 'rb')
 classifier = pickle.load(pickle_in)
+
+@st.cache
 
 def predict(carat, cut, color, clarity, depth, table, x, y, z):
     
@@ -51,28 +54,32 @@ def predict(carat, cut, color, clarity, depth, table, x, y, z):
     elif clarity == 'IF':
         clarity = 7
         
+    #making the prediction
     entries = pd.DataFrame([[carat, cut, color, clarity, depth, table, x, y, z]], columns=['carat', 'cut', 'color', 'clarity', 'depth', 'table', 'x', 'y', 'z']) 
 
     prediction = classifier.predict(entries)
     return prediction
 
+def main():
+    st.title('DIAMOND PRICE PREDICTOR')
+    st.header('Enter the features of the diamond')
 
-st.title('DIAMOND PRICE PREDICTOR')
-st.header('Enter the features of the diamond')
+    #Defining the user inputs
+    carat = st.number_input('Weight of the diamond: ', min_value=0.1, max_value=10.0, value=1.0)
+    cut = st.selectbox('Rating of the diamond', ['Fiar', 'Good', 'Very Good', 'Premium', 'Ideal'])
+    color = st.selectbox('Color rating', ['J', 'I', 'H', 'G', 'F', 'E', 'D'])
+    clarity = st.selectbox('Clarity rating', ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'])
+    depth = st.number_input('Diamond depth percentage', min_value=0.1, max_value=100.0, value=1.0)
+    table = st.number_input('Diamond table percentage', min_value=0.1, max_value=100.0, value=1.0)
+    x = st.number_input('Diamond length(X)', min_value=0.1, max_value=100.0, value=1.0)
+    y = st.number_input('Diamond width(Y)', min_value=0.1, max_value=100.0, value=1.0)
+    z = st.number_input('Diamond height(Z)', min_value=0.1, max_value=100.0, value=1.0)
 
-#Defining the user inputs
-carat = st.number_input('Weight of the diamond: ', min_value=0.1, max_value=10.0, value=1.0)
-cut = st.selectbox('Rating of the diamond', ['Fiar', 'Good', 'Very Good', 'Premium', 'Ideal'])
-color = st.selectbox('Color rating', ['J', 'I', 'H', 'G', 'F', 'E', 'D'])
-clarity = st.selectbox('Clarity rating', ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'])
-depth = st.number_input('Diamond depth percentage', min_value=0.1, max_value=100.0, value=1.0)
-table = st.number_input('Diamond table percentage', min_value=0.1, max_value=100.0, value=1.0)
-x = st.number_input('Diamond length(X)', min_value=0.1, max_value=100.0, value=1.0)
-y = st.number_input('Diamond width(Y)', min_value=0.1, max_value=100.0, value=1.0)
-z = st.number_input('Diamond height(Z)', min_value=0.1, max_value=100.0, value=1.0)
+    #creating the input button
 
-#creating the input button
+    if st.button('Predict'):
+        price = predict(carat, cut, color, clarity, depth, table, x, y, z)
+        st.success('The price of the diamond is {} USD'.format(price))
 
-if st.button('Predict'):
-    price = predict(carat, cut, color, clarity, depth, table, x, y, z)
-    st.success('The price of the diamond is {} USD'.format(price))
+if __name__=='__main__':
+    main()
