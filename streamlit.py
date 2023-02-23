@@ -3,7 +3,7 @@ import streamlit as st
 from sklearn.linear_model import LinearRegression 
 
 model = LinearRegression()
-model.load_model('model.json')
+model.load_model('regressor_param.txt')
 
 def predict(carat, cut, color, clarity, depth, table, x, y, z):
     
