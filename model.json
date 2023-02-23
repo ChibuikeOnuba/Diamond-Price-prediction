@@ -1,0 +1,1 @@
+regressor.save_model('model.json')

@@ -1,9 +1,9 @@
 import pandas as pd
 import streamlit as st
-from sklearn.linear_model import LinearRegression 
+import pickle
 
-model = LinearRegression()
-model.load_model('regressor_param.txt')
+pickle_in = open('model.pkl', 'rb')
+classifier = pickle.load(pickle_in)
 
 def predict(carat, cut, color, clarity, depth, table, x, y, z):
     
@@ -53,7 +53,7 @@ def predict(carat, cut, color, clarity, depth, table, x, y, z):
         
     entries = pd.DataFrame([[carat, cut, color, clarity, depth, table, x, y, z]], columns=['carat', 'cut', 'color', 'clarity', 'depth', 'table', 'x', 'y', 'z']) 
 
-    prediction = model.predict(entries)
+    prediction = classifier.predict(entries)
     return prediction
 
 
