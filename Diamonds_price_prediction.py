@@ -6,8 +6,9 @@ import pickle
 pickle_in = open('regressor.pkl', 'rb')
 regressor = pickle.load(pickle_in)
 
-pickle_in2 = open('xgboost.pkl', 'rb')
-xgboost = pickle.load(pickle_in2)
+with open('xgboost.pkl', 'rb') as file:
+    # Load the model from the pickle file
+    xgboost = pickle.load(file)
 
 @st.cache_data
 
