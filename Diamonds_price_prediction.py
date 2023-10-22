@@ -110,6 +110,7 @@ selection = st.sidebar.selectbox('Predict', ['Price', 'Rating'])
  
 def main():
     st.title('DIAMOND PRICE & RATING PREDICTION APP💎')
+    st.image('diamond.jpg')
     st.header('Predict {}'.format(selection))
     
     
