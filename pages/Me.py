@@ -11,7 +11,7 @@ def main():
     
     col2.write('I am a Data Scientist with passion for building ML solutions and making visuals to analyze business insights.') 
                
-    col2.write('I am in my penultimate year studying Computer Science major at the University of Nigeria')
+    col2.write('I am a final year studying Computer Science major at the University of Nigeria')
     col2.write('Feel free to go through my projects and contact me for collaborations :)')
     
     
